@@ -1,8 +1,9 @@
-package giveangel.back.global.oauth;
+package giveangel.back.global.oauth.vendor.kakao.client;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
-import org.springframework.http.HttpHeaders;
+import giveangel.back.global.oauth.vendor.kakao.dto.KakaoMemberResponse;
+import giveangel.back.global.oauth.vendor.kakao.dto.KakaoToken;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestHeader;

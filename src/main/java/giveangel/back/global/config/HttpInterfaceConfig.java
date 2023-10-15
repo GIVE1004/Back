@@ -1,6 +1,6 @@
 package giveangel.back.global.config;
 
-import giveangel.back.global.oauth.KakaoApiClient;
+import giveangel.back.global.oauth.vendor.kakao.client.KakaoApiClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;

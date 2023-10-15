@@ -1,5 +1,8 @@
-package giveangel.back.global.oauth;
+package giveangel.back.global.oauth.vendor.kakao.authcode;
 
+import giveangel.back.global.oauth.component.OAuthCodeUrlProvider;
+import giveangel.back.global.oauth.vendor.OAuthServerType;
+import giveangel.back.global.oauth.vendor.kakao.KakaoOAuthProps;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -11,7 +14,7 @@ public class KakaoOAuthCodeUrlProvider implements OAuthCodeUrlProvider {
 	private final KakaoOAuthProps props;
 
 	@Override
-	public OAuthServerType getOAuthServerType() {
+	public OAuthServerType support() {
 		return OAuthServerType.KAKAO;
 	}
 

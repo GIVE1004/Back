@@ -1,7 +1,6 @@
-package giveangel.back.global.oauth;
+package giveangel.back.global.oauth.vendor;
 
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.stereotype.Component;
 
 public class OAuthServerTypeConverter implements Converter<String,OAuthServerType> {
 

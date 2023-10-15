@@ -1,4 +1,6 @@
-package giveangel.back.global.oauth;
+package giveangel.back.global.oauth.vendor;
+
+import giveangel.back.global.oauth.exception.OAuthException;
 
 public enum OAuthServerType {
 	KAKAO, NAVER;

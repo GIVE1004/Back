@@ -1,6 +1,6 @@
 package giveangel.back.global.config;
 
-import giveangel.back.global.oauth.OAuthServerTypeConverter;
+import giveangel.back.global.oauth.vendor.OAuthServerTypeConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;

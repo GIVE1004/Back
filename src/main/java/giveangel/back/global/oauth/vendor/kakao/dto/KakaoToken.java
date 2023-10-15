@@ -1,4 +1,4 @@
-package giveangel.back.global.oauth;
+package giveangel.back.global.oauth.vendor.kakao.dto;
 
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;

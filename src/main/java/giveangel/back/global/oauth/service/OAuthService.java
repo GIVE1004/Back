@@ -1,7 +1,10 @@
-package giveangel.back.global.oauth;
+package giveangel.back.global.oauth.service;
 
 import giveangel.back.domain.member.entity.Member;
 import giveangel.back.domain.member.repository.MemberRepository;
+import giveangel.back.global.oauth.component.impl.OAuthCodeUrlProviderComposite;
+import giveangel.back.global.oauth.component.impl.OAuthMemberClientComposite;
+import giveangel.back.global.oauth.vendor.OAuthServerType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

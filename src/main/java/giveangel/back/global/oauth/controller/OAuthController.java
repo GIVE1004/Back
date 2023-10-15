@@ -1,5 +1,7 @@
-package giveangel.back.global.oauth;
+package giveangel.back.global.oauth.controller;
 
+import giveangel.back.global.oauth.vendor.OAuthServerType;
+import giveangel.back.global.oauth.service.OAuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

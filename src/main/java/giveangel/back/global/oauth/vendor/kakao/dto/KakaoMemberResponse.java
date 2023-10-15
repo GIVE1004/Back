@@ -1,17 +1,17 @@
-package giveangel.back.global.oauth;
+package giveangel.back.global.oauth.vendor.kakao.dto;
 
-import static giveangel.back.global.oauth.OAuthServerType.KAKAO;
+import static giveangel.back.global.oauth.vendor.OAuthServerType.KAKAO;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import giveangel.back.domain.member.entity.Member;
+import giveangel.back.domain.member.entity.OAuthId;
 import java.time.LocalDateTime;
 
 @JsonNaming(SnakeCaseStrategy.class)
 public record KakaoMemberResponse(
 	Long id, // 회원 번호
 	boolean hasSignedUp,
-
 	LocalDateTime connectedAt,
 	KakaoAccount kakaoAccount
 

@@ -1,4 +1,4 @@
-package giveangel.back.global.oauth;
+package giveangel.back.global.oauth.exception;
 
 public class OAuthException extends RuntimeException {
 

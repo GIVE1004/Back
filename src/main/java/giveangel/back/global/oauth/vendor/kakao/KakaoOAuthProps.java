@@ -1,4 +1,4 @@
-package giveangel.back.global.oauth;
+package giveangel.back.global.oauth.vendor.kakao;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

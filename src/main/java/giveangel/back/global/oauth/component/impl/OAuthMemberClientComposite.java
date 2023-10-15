@@ -1,9 +1,12 @@
-package giveangel.back.global.oauth;
+package giveangel.back.global.oauth.component.impl;
 
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
 import giveangel.back.domain.member.entity.Member;
+import giveangel.back.global.oauth.component.OAuthMemberClient;
+import giveangel.back.global.oauth.exception.OAuthException;
+import giveangel.back.global.oauth.vendor.OAuthServerType;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;

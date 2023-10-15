@@ -1,6 +1,10 @@
-package giveangel.back.global.oauth;
+package giveangel.back.global.oauth.vendor.kakao;
 
 import giveangel.back.domain.member.entity.Member;
+import giveangel.back.global.oauth.component.OAuthMemberClient;
+import giveangel.back.global.oauth.vendor.OAuthServerType;
+import giveangel.back.global.oauth.vendor.kakao.client.KakaoApiClient;
+import giveangel.back.global.oauth.vendor.kakao.dto.KakaoToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
