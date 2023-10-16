@@ -8,6 +8,4 @@ public record KakaoOAuthProps(String redirectUri,
 							  String clientSecret,
 							  String[] scope
 ) {
-
-
 }

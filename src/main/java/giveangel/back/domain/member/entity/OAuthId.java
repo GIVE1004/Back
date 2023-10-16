@@ -3,7 +3,7 @@ package giveangel.back.domain.member.entity;
 
 import static lombok.AccessLevel.PROTECTED;
 
-import giveangel.back.global.oauth.vendor.OAuthServerType;
+import giveangel.back.global.oauth.vendor.enums.OAuthServerType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;

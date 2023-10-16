@@ -5,14 +5,16 @@ import static java.util.stream.Collectors.toMap;
 
 import giveangel.back.global.oauth.component.OAuthCodeUrlProvider;
 import giveangel.back.global.oauth.exception.OAuthException;
-import giveangel.back.global.oauth.vendor.OAuthServerType;
+import giveangel.back.global.oauth.vendor.enums.OAuthServerType;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+@Primary
 @Component
-public class OAuthCodeUrlProviderComposite {
+public class OAuthCodeUrlProviderComposite implements OAuthCodeUrlProvider {
 
 	private final Map<OAuthServerType, OAuthCodeUrlProvider> providerMap;
 
@@ -22,8 +24,14 @@ public class OAuthCodeUrlProviderComposite {
 				toMap(OAuthCodeUrlProvider::support, identity()));
 	}
 
+	@Override
+	public OAuthServerType support() {
+		return null;
+	}
+
+	@Override
 	public String provide(OAuthServerType oAuthServerType) {
-		return getProvider(oAuthServerType).provide();
+		return getProvider(oAuthServerType).provide(oAuthServerType);
 	}
 
 	private OAuthCodeUrlProvider getProvider(OAuthServerType oAuthServerType) {

@@ -1,4 +1,4 @@
-package giveangel.back.global.oauth.vendor;
+package giveangel.back.global.oauth.vendor.enums;
 
 import org.springframework.core.convert.converter.Converter;
 

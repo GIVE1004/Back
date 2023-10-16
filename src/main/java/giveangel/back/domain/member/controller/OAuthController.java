@@ -1,7 +1,7 @@
-package giveangel.back.global.oauth.controller;
+package giveangel.back.domain.member.controller;
 
-import giveangel.back.global.oauth.vendor.OAuthServerType;
-import giveangel.back.global.oauth.service.OAuthService;
+import giveangel.back.global.oauth.vendor.enums.OAuthServerType;
+import giveangel.back.domain.member.service.OAuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -27,7 +27,7 @@ public class OAuthController {
 		HttpServletResponse response
 	) {
 
-		String redirectUrl = oAuthService.getAuthCodeRequestUrl(oAuthServerType);
+		String redirectUrl = oAuthService.provideAuthCodeRequestUrl(oAuthServerType);
 
 		response.sendRedirect(redirectUrl);
 

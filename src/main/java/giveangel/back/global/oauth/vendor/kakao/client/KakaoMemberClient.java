@@ -1,9 +1,9 @@
-package giveangel.back.global.oauth.vendor.kakao;
+package giveangel.back.global.oauth.vendor.kakao.client;
 
 import giveangel.back.domain.member.entity.Member;
 import giveangel.back.global.oauth.component.OAuthMemberClient;
-import giveangel.back.global.oauth.vendor.OAuthServerType;
-import giveangel.back.global.oauth.vendor.kakao.client.KakaoApiClient;
+import giveangel.back.global.oauth.vendor.enums.OAuthServerType;
+import giveangel.back.global.oauth.vendor.kakao.KakaoOAuthProps;
 import giveangel.back.global.oauth.vendor.kakao.dto.KakaoToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -23,7 +23,7 @@ public class KakaoMemberClient implements OAuthMemberClient {
 	}
 
 	@Override
-	public Member fetch(String authCode) {
+	public Member fetch(OAuthServerType oAuthServerType, String authCode) {
 		KakaoToken token = kakaoApiClient.fetchToken(tokenRequestParams(authCode));
 
 		return kakaoApiClient.fetchMember("Bearer " + token.accessToken()).toDomain();

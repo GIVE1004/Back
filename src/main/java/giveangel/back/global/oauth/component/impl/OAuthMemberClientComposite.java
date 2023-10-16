@@ -6,14 +6,16 @@ import static java.util.stream.Collectors.toMap;
 import giveangel.back.domain.member.entity.Member;
 import giveangel.back.global.oauth.component.OAuthMemberClient;
 import giveangel.back.global.oauth.exception.OAuthException;
-import giveangel.back.global.oauth.vendor.OAuthServerType;
+import giveangel.back.global.oauth.vendor.enums.OAuthServerType;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+@Primary
 @Component
-public class OAuthMemberClientComposite {
+public class OAuthMemberClientComposite implements OAuthMemberClient{
 
 	private final Map<OAuthServerType, OAuthMemberClient> clientMap;
 
@@ -23,8 +25,13 @@ public class OAuthMemberClientComposite {
 				toMap(OAuthMemberClient::getOAuthServerType, identity()));
 	}
 
+	@Override
+	public OAuthServerType getOAuthServerType() {
+		return null;
+	}
+
 	public Member fetch(OAuthServerType oAuthServerType, String authCode) {
-		return getClient(oAuthServerType).fetch(authCode);
+		return getClient(oAuthServerType).fetch(oAuthServerType,authCode);
 	}
 
 	private OAuthMemberClient getClient(OAuthServerType oAuthServerType) {
