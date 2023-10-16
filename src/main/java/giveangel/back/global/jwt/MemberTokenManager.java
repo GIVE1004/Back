@@ -8,6 +8,7 @@ import giveangel.back.global.oauth.vendor.enums.OAuthServerType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import java.time.Duration;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -27,29 +28,42 @@ public class MemberTokenManager {
 	// 회원 정보로 액세스 토큰 발급
 	public String issueAccessToken(Member member) {
 
+		Claims claims = Jwts.claims()
+			.id(String.valueOf(member.getId()))
+			.add(CLAIM_EMAIL, member.getOAuthId().getOauthServerId())
+			.add(CLAIM_VENDOR, member.getOAuthId().getOauthServerType())
+			.add(CLAIM_PROFILE_IMG, member.getOAuthId().getOauthServerType())
+			.add(CLAIM_NICKNAME, member.getNickname())
+			.add(CLAIM_ROLE, member.getRole())
+			.build();
+
+		return issueToken(claims, props.accessExpiration(), props.accessKey());
+	}
+	public String issueRefreshToken(String accessToken) {
+		Claims claims = Jwts.claims()
+			.id(accessToken)
+			.build();
+
+		return issueToken(claims, props.accessExpiration(), props.accessKey());
+	}
+
+	private String issueToken(Claims claims, Duration expiration, String secretKey) {
 		Date now = new Date();
 
-		String token = Jwts.builder()
-			.id(String.valueOf(member.getId()))
-			.claim(CLAIM_EMAIL, member.getOAuthId().getOauthServerId())
-			.claim(CLAIM_VENDOR, member.getOAuthId().getOauthServerType())
-			.claim(CLAIM_PROFILE_IMG, member.getOAuthId().getOauthServerType())
-			.claim(CLAIM_NICKNAME, member.getNickname())
-			.claim(CLAIM_ROLE, member.getRole())
+		return Jwts.builder()
+			.claims(claims)
 			.issuedAt(now)
-			.expiration(new Date(now.getTime() + props.accessExpiration().toMillis()))
-			.signWith(Keys.hmacShaKeyFor(props.accessKey().getBytes()))
+			.expiration(new Date(now.getTime() + expiration.toMillis()))
+			.signWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
 			.compact();
-
-		return token;
 	}
 
 	// 토큰을 회원 정보로 파싱
-	public Member parseAccessToken(String token) {
+	public Member parseAccessToken(String accessToken) {
 		Claims payload = Jwts.parser()
 			.verifyWith(Keys.hmacShaKeyFor(props.accessKey().getBytes()))
 			.build()
-			.parseSignedClaims(token).getPayload();
+			.parseSignedClaims(accessToken).getPayload();
 
 		return Member.builder()
 			.id(Long.valueOf(payload.getId()))
@@ -62,8 +76,16 @@ public class MemberTokenManager {
 			.build();
 	}
 
-	// 리프레시 토큰의 경우, Redis에 저장 (key : refresh token 값 , value : Member 정보)
+	public String parseRefreshToken(String refreshToken) {
+		Claims payload = Jwts.parser()
+			.verifyWith(Keys.hmacShaKeyFor(props.refreshKey().getBytes()))
+			.build()
+			.parseSignedClaims(refreshToken).getPayload();
 
+		return payload.getId();
+	}
+
+	// 리프레시 토큰의 경우, Redis에 저장 (key : refresh token 값 , value : Member 정보)
 
 
 }
