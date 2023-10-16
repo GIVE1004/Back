@@ -28,6 +28,11 @@ public class OAuthService {
 		Member member = memberRepository.findByoAuthId(oauthMember.getOAuthId())
 			.orElseGet(() -> memberRepository.save(oauthMember));
 
+		/*
+		Todo : 토큰반환으로 변경
+		 */
+
+
 		return member.getId();
 	}
 

@@ -5,6 +5,7 @@ import static giveangel.back.global.oauth.vendor.enums.OAuthServerType.KAKAO;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import giveangel.back.domain.member.entity.Member;
+import giveangel.back.domain.member.entity.MemberRole;
 import giveangel.back.domain.member.entity.OAuthId;
 import java.time.LocalDateTime;
 
@@ -22,6 +23,7 @@ public record KakaoMemberResponse(
 			.oAuthId(new OAuthId(kakaoAccount.email, KAKAO))
 			.nickname(kakaoAccount.profile.nickname)
 			.profileImageUrl(kakaoAccount.profile.profileImageUrl)
+			.role(MemberRole.MEMBER)
 			.build();
 	}
 

@@ -1,10 +1,13 @@
 package giveangel.back.domain.member.entity;
 
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -37,5 +40,8 @@ public class Member {
 
 	private String nickname;
 	private String profileImageUrl;
+
+	@Enumerated(STRING)
+	private MemberRole role;
 
 }
