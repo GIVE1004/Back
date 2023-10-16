@@ -20,7 +20,8 @@ public record KakaoMemberResponse(
 
 	public Member toDomain() {
 		return Member.builder()
-			.oAuthId(new OAuthId(kakaoAccount.email, KAKAO))
+			.oAuthId(new OAuthId(String.valueOf(id), KAKAO))
+			.email(kakaoAccount.email)
 			.nickname(kakaoAccount.profile.nickname)
 			.profileImageUrl(kakaoAccount.profile.profileImageUrl)
 			.role(MemberRole.MEMBER)

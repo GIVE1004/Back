@@ -37,7 +37,7 @@ public class Member {
 
 	@Embedded
 	private OAuthId oAuthId;
-
+	private String email;
 	private String nickname;
 	private String profileImageUrl;
 
