@@ -1,12 +1,12 @@
 package giveangel.back.global.jwt;
 
-import giveangel.back.domain.member.dto.Tokens;
 import giveangel.back.domain.member.entity.Member;
 import giveangel.back.domain.member.entity.MemberRole;
 import giveangel.back.domain.member.entity.OAuthId;
 import giveangel.back.global.oauth.vendor.enums.OAuthServerType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.Keys;
 import java.time.Duration;
 import java.util.Date;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class MemberTokenManager {
+public class JwtTokenProvider {
 
 	private final JwtProps props;
 
@@ -25,7 +25,7 @@ public class MemberTokenManager {
 	private static final String CLAIM_ROLE = "role";
 	private static final String CLAIM_PROFILE_IMG = "profileImg";
 
-	// 회원 정보로 액세스 토큰 발급
+	// 액세스 토큰 발급
 	public String issueAccessToken(Member member) {
 
 		Claims claims = Jwts.claims()
@@ -39,9 +39,11 @@ public class MemberTokenManager {
 
 		return issueToken(claims, props.accessExpiration(), props.accessKey());
 	}
-	public String issueRefreshToken(String accessToken) {
+
+	// 리프레시 토큰 발급
+	public String issueRefreshToken() {
 		Claims claims = Jwts.claims()
-			.id(accessToken)
+			.issuer("giveAngel")
 			.build();
 
 		return issueToken(claims, props.accessExpiration(), props.accessKey());
@@ -82,10 +84,20 @@ public class MemberTokenManager {
 			.build()
 			.parseSignedClaims(refreshToken).getPayload();
 
+
 		return payload.getId();
 	}
 
-	// 리프레시 토큰의 경우, Redis에 저장 (key : refresh token 값 , value : Member 정보)
+	private void validateToken() {
+		Claims claims;
+
+		try {
+
+		} catch (MalformedJwtException e) {
+
+		}catch ()
+
+	}
 
 
 }
