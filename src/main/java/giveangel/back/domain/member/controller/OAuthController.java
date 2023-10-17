@@ -1,5 +1,7 @@
 package giveangel.back.domain.member.controller;
 
+import giveangel.back.domain.member.dto.LoginResponse;
+import giveangel.back.global.common.Message;
 import giveangel.back.global.oauth.vendor.enums.OAuthServerType;
 import giveangel.back.domain.member.service.OAuthService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,7 +24,7 @@ public class OAuthController {
 
 	@SneakyThrows
 	@GetMapping("/{oAuthServerType}")
-	public ResponseEntity<Void> redirectOAuthCodeRequestUrl(
+	public ResponseEntity<Message> redirectOAuthCodeRequestUrl(
 		@PathVariable OAuthServerType oAuthServerType,
 		HttpServletResponse response
 	) {
@@ -31,15 +33,16 @@ public class OAuthController {
 
 		response.sendRedirect(redirectUrl);
 
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok().body(Message.success());
 	}
 
 	@GetMapping("/login/{oAuthServerType}")
-	public ResponseEntity<Long> login(
+	public ResponseEntity<Message<LoginResponse>> login(
 		@PathVariable OAuthServerType oAuthServerType,
 		@RequestParam("code") String authCode
 	) {
-		Long login = oAuthService.login(oAuthServerType, authCode);
-		return ResponseEntity.ok(login);
+		LoginResponse result = oAuthService.login(oAuthServerType, authCode);
+		return ResponseEntity.ok().body(Message.success(result));
 	}
+
 }

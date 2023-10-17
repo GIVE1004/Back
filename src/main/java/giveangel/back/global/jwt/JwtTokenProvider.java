@@ -1,13 +1,19 @@
 package giveangel.back.global.jwt;
 
+import static giveangel.back.global.jwt.exception.JwtErrorCode.EXPIRED_TOKEN;
+import static giveangel.back.global.jwt.exception.JwtErrorCode.INVALID_TOKEN;
+
 import giveangel.back.domain.member.entity.Member;
 import giveangel.back.domain.member.entity.MemberRole;
 import giveangel.back.domain.member.entity.OAuthId;
+import giveangel.back.global.jwt.exception.JwtException;
 import giveangel.back.global.oauth.vendor.enums.OAuthServerType;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import java.time.Duration;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
@@ -42,11 +48,7 @@ public class JwtTokenProvider {
 
 	// 리프레시 토큰 발급
 	public String issueRefreshToken() {
-		Claims claims = Jwts.claims()
-			.issuer("giveAngel")
-			.build();
-
-		return issueToken(claims, props.accessExpiration(), props.accessKey());
+		return issueToken(null, props.accessExpiration(), props.accessKey());
 	}
 
 	private String issueToken(Claims claims, Duration expiration, String secretKey) {
@@ -62,10 +64,7 @@ public class JwtTokenProvider {
 
 	// 토큰을 회원 정보로 파싱
 	public Member parseAccessToken(String accessToken) {
-		Claims payload = Jwts.parser()
-			.verifyWith(Keys.hmacShaKeyFor(props.accessKey().getBytes()))
-			.build()
-			.parseSignedClaims(accessToken).getPayload();
+		Claims payload = parseToken(accessToken, props.accessKey());
 
 		return Member.builder()
 			.id(Long.valueOf(payload.getId()))
@@ -78,25 +77,26 @@ public class JwtTokenProvider {
 			.build();
 	}
 
-	public String parseRefreshToken(String refreshToken) {
-		Claims payload = Jwts.parser()
-			.verifyWith(Keys.hmacShaKeyFor(props.refreshKey().getBytes()))
-			.build()
-			.parseSignedClaims(refreshToken).getPayload();
-
-
-		return payload.getId();
+	public void parseRefreshToken(String refreshToken) {
+		parseToken(refreshToken, props.refreshKey());
 	}
 
-	private void validateToken() {
-		Claims claims;
+	private Claims parseToken(String token, String secretKey) {
+		Claims payload;
 
 		try {
+			payload = Jwts.parser()
+				.verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes()))
+				.build()
+				.parseSignedClaims(token).getPayload();
 
-		} catch (MalformedJwtException e) {
+		} catch (ExpiredJwtException e) {
+			throw new JwtException(EXPIRED_TOKEN);
+		} catch (MalformedJwtException | SignatureException | SecurityException | IllegalArgumentException e) {
+			throw new JwtException(INVALID_TOKEN);
+		}
 
-		}catch ()
-
+		return payload;
 	}
 
 

@@ -32,8 +32,8 @@ class JwtTokenProviderTest {
 		SecretKey key = Keys.hmacShaKeyFor(
 			"vsaddadsvdvasadsdassdvsdadasvdasssvdvsavas".getBytes());
 		String token = Jwts.builder()
-			.id("test")
-			.expiration(new Date())
+			.claims(null)
+			.expiration(new Date(new Date().getTime() + 100000L))
 			.signWith(key)
 			.compact();
 
@@ -45,7 +45,6 @@ class JwtTokenProviderTest {
 				.build()
 				.parseSignedClaims(token)
 				.getPayload();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

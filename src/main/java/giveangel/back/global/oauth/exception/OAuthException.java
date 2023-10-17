@@ -1,8 +1,14 @@
 package giveangel.back.global.oauth.exception;
 
+import lombok.Getter;
+
+@Getter
 public class OAuthException extends RuntimeException {
 
-	public OAuthException(String message) {
-		super(message);
+	private final OAuthErrorCode errorCode;
+
+	public OAuthException(OAuthErrorCode errorCode) {
+		super(errorCode.getMessage());
+		this.errorCode = errorCode;
 	}
 }
