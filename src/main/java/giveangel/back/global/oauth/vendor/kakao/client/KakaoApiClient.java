@@ -16,7 +16,7 @@ public interface KakaoApiClient {
 
 	// 인증 코드 발송 후, 액세스 토큰 받아오기
 	@PostExchange(url = "https://kauth.kakao.com/oauth/token", contentType = APPLICATION_FORM_URLENCODED_VALUE)
-	KakaoToken fetchToken(@RequestParam MultiValueMap<String, String> params);
+	KakaoToken fetchToken(@RequestParam(value = "params") MultiValueMap<String, String> params);
 
 	// 액세스 토큰으로 회원 정보 받아오기
 	@GetExchange("https://kapi.kakao.com/v2/user/me")
