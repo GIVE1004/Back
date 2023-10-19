@@ -3,6 +3,7 @@ package giveangel.back.global.jwt;
 import static giveangel.back.global.jwt.exception.JwtErrorCode.EXPIRED_TOKEN;
 import static giveangel.back.global.jwt.exception.JwtErrorCode.INVALID_TOKEN;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import giveangel.back.domain.member.entity.Member;
 import giveangel.back.domain.member.entity.MemberRole;
 import giveangel.back.domain.member.entity.OAuthId;
@@ -14,9 +15,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+import io.netty.handler.codec.base64.Base64Decoder;
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.Date;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.json.BasicJsonParser;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
@@ -24,6 +30,7 @@ import org.springframework.stereotype.Component;
 public class JwtTokenProvider {
 
 	private final JwtProps props;
+	private final ObjectMapper objectMapper;
 
 	private static final String CLAIM_EMAIL = "email";
 	private static final String CLAIM_VENDOR = "vendor";
@@ -70,10 +77,10 @@ public class JwtTokenProvider {
 			.id(Long.valueOf(payload.getId()))
 			.nickname(payload.get(CLAIM_NICKNAME, String.class))
 			.profileImageUrl(payload.get(CLAIM_PROFILE_IMG, String.class))
-			.role(payload.get(CLAIM_ROLE, MemberRole.class))
+			.role(MemberRole.fromName(payload.get(CLAIM_ROLE, String.class)))
 			.oAuthId(new OAuthId(
 				payload.get(CLAIM_EMAIL, String.class),
-				payload.get(CLAIM_VENDOR, OAuthServerType.class)))
+				OAuthServerType.fromName(payload.get(CLAIM_VENDOR, String.class))))
 			.build();
 	}
 
@@ -99,5 +106,24 @@ public class JwtTokenProvider {
 		return payload;
 	}
 
+	public Member parseAccessTokenByBase64(String accessToken) {
+		String payload = accessToken.split("\\.")[1];
+
+		String decodePayload = new String(Base64.getDecoder().decode(payload));
+
+		BasicJsonParser jsonParser = new BasicJsonParser();
+
+		Map<String, Object> map = jsonParser.parseMap(decodePayload);
+
+		return Member.builder()
+			.id(Long.valueOf((String)(map.get("jti"))))
+			.nickname((String)map.get(CLAIM_NICKNAME))
+			.profileImageUrl((String)map.get(CLAIM_PROFILE_IMG))
+			.role(MemberRole.fromName((String)map.get(CLAIM_ROLE)))
+			.oAuthId(new OAuthId(
+				(String)map.get(CLAIM_EMAIL),
+				OAuthServerType.fromName((String)map.get(CLAIM_VENDOR))))
+			.build();
+	}
 
 }

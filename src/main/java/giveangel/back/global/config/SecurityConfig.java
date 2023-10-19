@@ -1,6 +1,9 @@
 package giveangel.back.global.config;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import giveangel.back.global.jwt.JwtTokenProvider;
+import giveangel.back.global.jwt.security.JwtSecurityFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -18,6 +22,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @RequiredArgsConstructor
 @Configuration
 public class SecurityConfig {
+
+	private final JwtTokenProvider jwtTokenProvider;
+	private final ObjectMapper objectMapper;
+
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -35,17 +43,16 @@ public class SecurityConfig {
 				auth.anyRequest().permitAll()
 			)
 			.formLogin(AbstractHttpConfigurer::disable)
-			.logout(AbstractHttpConfigurer::disable);
+			.logout(AbstractHttpConfigurer::disable)
+			.addFilterBefore(jwtSecurityFilter(), UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
 	}
-
 
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().anyRequest();
 	}
-
 
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
@@ -59,4 +66,10 @@ public class SecurityConfig {
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
+
+	@Bean
+	public JwtSecurityFilter jwtSecurityFilter() {
+		return new JwtSecurityFilter(jwtTokenProvider, objectMapper);
+	}
+
 }
