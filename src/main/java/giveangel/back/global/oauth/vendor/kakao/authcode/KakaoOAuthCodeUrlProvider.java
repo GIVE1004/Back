@@ -3,6 +3,7 @@ package giveangel.back.global.oauth.vendor.kakao.authcode;
 import giveangel.back.global.oauth.component.OAuthCodeUrlProvider;
 import giveangel.back.global.oauth.vendor.enums.OAuthServerType;
 import giveangel.back.global.oauth.vendor.google.GoogleOAuthProps;
+import giveangel.back.global.oauth.vendor.kakao.KakaoOAuthProps;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -11,7 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequiredArgsConstructor
 public class KakaoOAuthCodeUrlProvider implements OAuthCodeUrlProvider {
 
-	private final GoogleOAuthProps props;
+	private final KakaoOAuthProps props;
 
 	@Override
 	public OAuthServerType support() {
