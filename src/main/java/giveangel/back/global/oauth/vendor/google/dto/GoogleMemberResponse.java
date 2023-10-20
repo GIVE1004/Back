@@ -1,5 +1,6 @@
 package giveangel.back.global.oauth.vendor.google.dto;
 
+import static giveangel.back.global.oauth.vendor.enums.OAuthServerType.GOOGLE;
 import static giveangel.back.global.oauth.vendor.enums.OAuthServerType.KAKAO;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
@@ -24,7 +25,7 @@ public record GoogleMemberResponse(
 
 	public Member toDomain() {
 		return Member.builder()
-			.oAuthId(new OAuthId(String.valueOf(id), KAKAO))
+			.oAuthId(new OAuthId(String.valueOf(id), GOOGLE))
 			.email(email)
 			.nickname(name)
 			.profileImageUrl(picture)
