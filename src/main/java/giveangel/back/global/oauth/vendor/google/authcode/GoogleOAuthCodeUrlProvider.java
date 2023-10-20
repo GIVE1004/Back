@@ -1,4 +1,4 @@
-package giveangel.back.global.oauth.vendor.kakao.authcode;
+package giveangel.back.global.oauth.vendor.google.authcode;
 
 import giveangel.back.global.oauth.component.OAuthCodeUrlProvider;
 import giveangel.back.global.oauth.vendor.enums.OAuthServerType;
@@ -9,23 +9,23 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
 @RequiredArgsConstructor
-public class KakaoOAuthCodeUrlProvider implements OAuthCodeUrlProvider {
+public class GoogleOAuthCodeUrlProvider implements OAuthCodeUrlProvider {
 
 	private final GoogleOAuthProps props;
 
 	@Override
 	public OAuthServerType support() {
-		return OAuthServerType.KAKAO;
+		return OAuthServerType.GOOGLE;
 	}
 
 	@Override
 	public String provide(OAuthServerType oAuthServerType) {
 		return UriComponentsBuilder
-			.fromUriString("https://kauth.kakao.com/oauth/authorize")
+			.fromUriString("https://accounts.google.com/o/oauth2/v2/auth")
 			.queryParam("response_type","code")
 			.queryParam("client_id",props.clientId())
 			.queryParam("redirect_uri",props.redirectUri())
-			.queryParam("scope",String.join(",",props.scope()))
+			.queryParam("scope",String.join(" ",props.scope()))
 			.toUriString();
 	}
 }
