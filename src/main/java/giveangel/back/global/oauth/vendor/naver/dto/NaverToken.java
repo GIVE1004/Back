@@ -1,11 +1,11 @@
-package giveangel.back.global.oauth.vendor.kakao.dto;
+package giveangel.back.global.oauth.vendor.naver.dto;
 
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(SnakeCaseStrategy.class)
-public record KakaoToken(
+public record NaverToken(
 	String tokenType,
 	String accessToken,
 	String idToken,
