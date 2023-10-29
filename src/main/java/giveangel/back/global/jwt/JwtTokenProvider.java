@@ -43,9 +43,8 @@ public class JwtTokenProvider {
 
 		Claims claims = Jwts.claims()
 			.id(String.valueOf(member.getId()))
-			.add(CLAIM_EMAIL, member.getOAuthId().getOauthServerId())
-			.add(CLAIM_VENDOR, member.getOAuthId().getOauthServerType())
-			.add(CLAIM_PROFILE_IMG, member.getOAuthId().getOauthServerType())
+			.add(CLAIM_EMAIL, member.getEmail())
+			.add(CLAIM_PROFILE_IMG, member.getProfileImageUrl())
 			.add(CLAIM_NICKNAME, member.getNickname())
 			.add(CLAIM_ROLE, member.getRole())
 			.build();
@@ -76,11 +75,9 @@ public class JwtTokenProvider {
 		return Member.builder()
 			.id(Long.valueOf(payload.getId()))
 			.nickname(payload.get(CLAIM_NICKNAME, String.class))
+			.email(payload.get(CLAIM_EMAIL, String.class))
 			.profileImageUrl(payload.get(CLAIM_PROFILE_IMG, String.class))
 			.role(MemberRole.fromName(payload.get(CLAIM_ROLE, String.class)))
-			.oAuthId(new OAuthId(
-				payload.get(CLAIM_EMAIL, String.class),
-				OAuthServerType.fromName(payload.get(CLAIM_VENDOR, String.class))))
 			.build();
 	}
 
@@ -117,12 +114,10 @@ public class JwtTokenProvider {
 
 		return Member.builder()
 			.id(Long.valueOf((String)(map.get("jti"))))
+			.email((String)map.get(CLAIM_EMAIL))
 			.nickname((String)map.get(CLAIM_NICKNAME))
 			.profileImageUrl((String)map.get(CLAIM_PROFILE_IMG))
 			.role(MemberRole.fromName((String)map.get(CLAIM_ROLE)))
-			.oAuthId(new OAuthId(
-				(String)map.get(CLAIM_EMAIL),
-				OAuthServerType.fromName((String)map.get(CLAIM_VENDOR))))
 			.build();
 	}
 

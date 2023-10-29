@@ -57,9 +57,11 @@ public class OAuthService {
 	}
 
 	public LoginResponse refreshToken(Tokens tokens) {
+
+		jwtTokenProvider.parseRefreshToken(tokens.refreshToken());
+
 		String accessToken = refreshTokenRepository.find(tokens.refreshToken())
 			.orElseThrow(() -> new JwtException(JwtErrorCode.INVALID_TOKEN));
-
 
 		if (!accessToken.equals(tokens.accessToken())) {
 			throw new JwtException(JwtErrorCode.INVALID_TOKEN);
