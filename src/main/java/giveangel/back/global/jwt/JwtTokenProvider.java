@@ -54,7 +54,7 @@ public class JwtTokenProvider {
 
 	// 리프레시 토큰 발급
 	public String issueRefreshToken() {
-		return issueToken(null, props.accessExpiration(), props.accessKey());
+		return issueToken(null, props.accessExpiration(), props.refreshKey());
 	}
 
 	private String issueToken(Claims claims, Duration expiration, String secretKey) {
