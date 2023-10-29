@@ -49,7 +49,7 @@ public class OAuthController {
 	}
 
 	@PostMapping("/refresh")
-	public ResponseEntity<Message<Tokens>> refreshToken(@RequestBody Tokens tokens) {
+	public ResponseEntity<Message<LoginResponse>> refreshToken(@RequestBody Tokens tokens) {
 		return ResponseEntity.ok().body(Message.success(oAuthService.refreshToken(tokens)));
 	}
 }

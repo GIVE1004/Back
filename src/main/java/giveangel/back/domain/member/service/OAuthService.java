@@ -13,12 +13,8 @@ import giveangel.back.global.oauth.component.OAuthCodeUrlProvider;
 import giveangel.back.global.oauth.component.OAuthMemberClient;
 import giveangel.back.global.oauth.vendor.enums.OAuthServerType;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.DispatcherServlet;
 
 @Transactional
 @RequiredArgsConstructor
@@ -60,12 +56,10 @@ public class OAuthService {
 			.build();
 	}
 
-	public Tokens refreshToken(Tokens tokens) {
-		System.out.println(tokens.refreshToken() + " 가져온 토큰");
+	public LoginResponse refreshToken(Tokens tokens) {
 		String accessToken = refreshTokenRepository.find(tokens.refreshToken())
 			.orElseThrow(() -> new JwtException(JwtErrorCode.INVALID_TOKEN));
 
-		System.out.println(accessToken);
 
 		if (!accessToken.equals(tokens.accessToken())) {
 			throw new JwtException(JwtErrorCode.INVALID_TOKEN);
@@ -79,10 +73,19 @@ public class OAuthService {
 		refreshTokenRepository.delete(tokens.refreshToken());
 		refreshTokenRepository.save(newRefreshToken,newAccessToken);
 
-
-		return Tokens.builder()
+		Tokens newToken = Tokens.builder()
 			.accessToken(newAccessToken)
 			.refreshToken(newRefreshToken)
+			.build();
+
+		return LoginResponse.builder()
+			.tokens(newToken)
+			.memberInfo(MemberInfo.builder()
+				.id(member.getId())
+				.email(member.getEmail())
+				.profileImg(member.getProfileImageUrl())
+				.nickname(member.getNickname())
+				.build())
 			.build();
 	}
 
