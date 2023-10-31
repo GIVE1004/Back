@@ -1,5 +1,6 @@
 package giveangel.back.global.config;
 
+import giveangel.back.global.api.news.NaverNewsApiClient;
 import giveangel.back.global.oauth.vendor.google.client.GoogleApiClient;
 import giveangel.back.global.oauth.vendor.kakao.client.KakaoApiClient;
 import giveangel.back.global.oauth.vendor.naver.client.NaverApiClient;
@@ -20,6 +21,9 @@ public class HttpInterfaceConfig {
 	public NaverApiClient naverApiClient() { return createHttpInterface(NaverApiClient.class); }
 	@Bean
 	public GoogleApiClient googleApiClient() { return createHttpInterface(GoogleApiClient.class); }
+
+	@Bean
+	public NaverNewsApiClient naverNewsApiClient() { return createHttpInterface(NaverNewsApiClient.class); }
 
 	private <T> T createHttpInterface(Class<T> clazz) {
 		WebClient webClient = WebClient.create();

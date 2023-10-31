@@ -2,7 +2,9 @@ package giveangel.back.domain.charity.controller;
 
 import giveangel.back.domain.charity.service.CharityService;
 import giveangel.back.domain.charity.service.dto.CharityInfo;
+import giveangel.back.global.api.news.News;
 import giveangel.back.global.common.Message;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,4 +31,10 @@ public class CharityController {
 			.body(Message.success(charityService.inquiryCharityFinance(charityId)));
 	}
 
+	@GetMapping("/news")
+	public ResponseEntity<Message<List<News>>> news(@PathVariable Long charityId) {
+
+		return ResponseEntity.ok()
+			.body(Message.success(charityService.inquiryCharityNews(charityId)));
+	}
 }
