@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("/charities/{charityId}/profit")
+@RequestMapping("/charities/{charityId}/profits")
 @RestController
 public class ProfitController {
 
 	private final ProfitService profitService;
 
-	@GetMapping("/public-detail")
-	public ResponseEntity<PublicProfitInfo> publicDetail(@PathVariable Long charityId) {
+	@GetMapping("/public-current")
+	public ResponseEntity<PublicProfitInfo> publicCurrent(@PathVariable Long charityId) {
 		return ResponseEntity.ok().body(profitService.inquiryPublicProfit(charityId));
 	}
-
+	
 }
