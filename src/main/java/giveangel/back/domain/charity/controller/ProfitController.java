@@ -1,6 +1,7 @@
 package giveangel.back.domain.charity.controller;
 
 import giveangel.back.domain.charity.service.ProfitService;
+import giveangel.back.domain.charity.service.dto.ProfitInfo;
 import giveangel.back.domain.charity.service.dto.PublicProfitInfo;
 import giveangel.back.global.common.Message;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,12 @@ public class ProfitController {
 	@GetMapping("/public-current")
 	public ResponseEntity<Message<PublicProfitInfo>> publicCurrent(@PathVariable Long charityId) {
 		return ResponseEntity.ok()
-			.body(Message.success(profitService.inquiryPublicProfit(charityId)));
+			.body(Message.success(profitService.inquiryCurrentPublicProfit(charityId)));
 	}
-	
+
+	@GetMapping("/current")
+	public ResponseEntity<Message<ProfitInfo>> current(@PathVariable Long charityId) {
+		return ResponseEntity.ok()
+			.body(Message.success(profitService.inquiryCurrentProfit(charityId)));
+	}
 }

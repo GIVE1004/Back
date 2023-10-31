@@ -8,9 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface ProfitRepository extends JpaRepository<Profit, Long> {
 
-
-
-
 	@Query("select p from Profit p where p.charity.id = :charityId order by p.baseYearMonth desc limit 1")
 	Optional<Profit> findRecentProfitByCharityId(@Param("charityId") Long charityId);
+
+
 }
