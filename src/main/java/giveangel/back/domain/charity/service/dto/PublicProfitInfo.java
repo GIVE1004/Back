@@ -2,6 +2,7 @@ package giveangel.back.domain.charity.service.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import giveangel.back.domain.charity.entity.Charity;
 import giveangel.back.domain.charity.entity.Profit;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,8 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @Builder
 @JsonNaming(SnakeCaseStrategy.class)
 public class PublicProfitInfo {

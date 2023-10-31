@@ -13,7 +13,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "public_interest_corporations")
 public class Charity {

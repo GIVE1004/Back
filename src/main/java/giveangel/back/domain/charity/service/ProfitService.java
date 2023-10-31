@@ -1,6 +1,8 @@
 package giveangel.back.domain.charity.service;
 
-import giveangel.back.domain.charity.entity.Profit;
+import static giveangel.back.domain.charity.exception.CharityErrorCode.NOT_EXISTS_CHARITY;
+
+import giveangel.back.domain.charity.exception.CharityException;
 import giveangel.back.domain.charity.repository.ProfitRepository;
 import giveangel.back.domain.charity.service.dto.PublicProfitInfo;
 import lombok.RequiredArgsConstructor;
@@ -12,15 +14,9 @@ public class ProfitService {
 
 	private final ProfitRepository profitRepository;
 
-
 	// 최신 연도로 조회 (한개)
 	public PublicProfitInfo inquiryPublicProfit(Long charityId) {
 		return PublicProfitInfo.of(profitRepository.findRecentProfitByCharityId(charityId)
-			.orElse(new Profit()));
-	}
-
-
-	public void inquiryProfit(Long charityId) {
-
+			.orElseThrow(() -> new CharityException(NOT_EXISTS_CHARITY)));
 	}
 }

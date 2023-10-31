@@ -15,7 +15,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "profits",
 	uniqueConstraints = @UniqueConstraint(
