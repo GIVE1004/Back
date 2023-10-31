@@ -23,4 +23,10 @@ public class CharityController {
 			.body(Message.success(charityService.inquiryCharity(charityId)));
 	}
 
+	@GetMapping("/finance")
+	public ResponseEntity<Message> finance(@PathVariable Long charityId) {
+		return ResponseEntity.ok()
+			.body(Message.success(charityService.inquiryCharityFinance(charityId)));
+	}
+
 }

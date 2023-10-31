@@ -7,6 +7,7 @@ import giveangel.back.domain.charity.repository.ProfitRepository;
 import giveangel.back.domain.charity.service.dto.ProfitInfo;
 import giveangel.back.domain.charity.service.dto.PublicProfitInfo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -23,9 +24,6 @@ public class ProfitService {
 
 	public ProfitInfo inquiryCurrentProfit(Long charityId) {
 		return ProfitInfo.of(profitRepository.findRecentProfitByCharityId(charityId)
-			.orElseThrow(() -> new CharityException(NOT_EXISTS_CHARITY)));
+				.orElseThrow(() -> new CharityException(NOT_EXISTS_CHARITY)));
 	}
-
-
-
 }
