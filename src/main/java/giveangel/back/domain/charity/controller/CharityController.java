@@ -2,6 +2,7 @@ package giveangel.back.domain.charity.controller;
 
 import giveangel.back.domain.charity.service.CharityService;
 import giveangel.back.domain.charity.service.dto.CharityInfo;
+import giveangel.back.domain.charity.service.dto.CharityNewsInfo;
 import giveangel.back.global.api.news.News;
 import giveangel.back.global.common.Message;
 import java.util.List;
@@ -32,8 +33,7 @@ public class CharityController {
 	}
 
 	@GetMapping("/news")
-	public ResponseEntity<Message<List<News>>> news(@PathVariable Long charityId) {
-
+	public ResponseEntity<Message<CharityNewsInfo>> news(@PathVariable Long charityId) {
 		return ResponseEntity.ok()
 			.body(Message.success(charityService.inquiryCharityNews(charityId)));
 	}
