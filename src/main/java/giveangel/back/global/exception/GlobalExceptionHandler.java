@@ -9,6 +9,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -18,6 +19,7 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.badRequest()
 			.body(Message.fail(e.getErrorCode().name(), e.getMessage()));
 	}
+
 	@ExceptionHandler(JwtException.class)
 	public ResponseEntity<Message> jwtExceptionHandler(JwtException e) {
 		e.printStackTrace();
@@ -37,4 +39,10 @@ public class GlobalExceptionHandler {
 			.body(Message.fail(HttpStatus.UNAUTHORIZED.name(), "인증되지 않은 요청입니다."));
 	}
 
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	public ResponseEntity<Message> methodArgumentTypeMismatchException(
+		MethodArgumentTypeMismatchException e) {
+		return ResponseEntity.badRequest()
+			.body(Message.fail(HttpStatus.BAD_REQUEST.name(), "잘못된 요청입니다."));
+	}
 }
