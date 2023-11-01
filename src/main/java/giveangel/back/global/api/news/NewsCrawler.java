@@ -23,7 +23,7 @@ public class NewsCrawler {
 
 			thumnail = thumbEle.attr(ATTRIBUTE);
 			siteName = siteNameEle.attr(ATTRIBUTE);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
