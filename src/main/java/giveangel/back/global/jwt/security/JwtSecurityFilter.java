@@ -1,7 +1,6 @@
 package giveangel.back.global.jwt.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import giveangel.back.domain.member.entity.Member;
 import giveangel.back.global.common.Message;
 import giveangel.back.global.jwt.JwtTokenProvider;
 import giveangel.back.global.jwt.exception.JwtException;
@@ -35,7 +34,7 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
 
 		if (StringUtils.hasText(accessToken)) {
 			try {
-				Member member = jwtTokenProvider.parseAccessToken(accessToken);
+				LoginMember member = jwtTokenProvider.parseAccessToken(accessToken);
 
 				SecurityContextHolder.getContext()
 					.setAuthentication(createAuthenticationToken(member));
@@ -59,9 +58,9 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
 		return null;
 	}
 
-	private JwtAuthenticationToken createAuthenticationToken(Member member) {
+	private JwtAuthenticationToken createAuthenticationToken(LoginMember member) {
 		return new JwtAuthenticationToken(member, "",
-			List.of(new SimpleGrantedAuthority(member.getRole().name())));
+			List.of(new SimpleGrantedAuthority(member.role().name())));
 	}
 
 	private void sendError(HttpServletResponse response, JwtException e)
