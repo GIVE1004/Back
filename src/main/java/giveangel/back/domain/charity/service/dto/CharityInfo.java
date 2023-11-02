@@ -25,6 +25,7 @@ public class CharityInfo {
 	private String representative;
 	private LocalDate establishmentDate;
 	private String establishmentDateType;
+	private String location;
 	private String tel;
 	private String homepage;
 	private String email;
@@ -42,6 +43,7 @@ public class CharityInfo {
 			.representative(charity.getRepresentative())
 			.establishmentDate(charity.getEstablishmentDate())
 			.establishmentDateType(charity.getEstablishmentType())
+			.location(charity.getLocation())
 			.tel(charity.getTel())
 			.homepage(charity.getHomepage())
 			.email(charity.getEmail())
