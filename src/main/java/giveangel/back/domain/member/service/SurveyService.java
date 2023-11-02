@@ -26,4 +26,8 @@ public class SurveyService {
 		surveyRepository.save(request.toEntity());
 	}
 
+	public boolean checkSurvey(Long memberId) {
+		return surveyRepository.existsByMemberId(memberId);
+	}
+
 }
