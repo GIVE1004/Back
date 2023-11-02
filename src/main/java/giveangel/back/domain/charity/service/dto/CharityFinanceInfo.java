@@ -25,45 +25,41 @@ public class CharityFinanceInfo {
 	private Long totalAsset;
 	private Long debt;
 	private Long netAsset;
+	private List<String> tableHead;
 
 	// 최근을 포함한 3년 치
-	private List<Detail> threeYears;
+	private List<List<Long>> tableData;
 
 	public static CharityFinanceInfo of( List<Asset> assets , List<Profit> profits , List<Expense> expenses) {
-		ArrayList<Detail> threeYears = new ArrayList<>();
+		ArrayList<String> tableHead = new ArrayList<>();
+		tableHead.add("PERIOD");
 
+		ArrayList<List<Long>> tableData = new ArrayList<>();
 		for (int i = 0; i < 3; i++) {
+			ArrayList<Long> data = new ArrayList<>();
+
 			Asset asset = assets.get(i);
 			Profit profit = profits.get(i);
 			Expense expense = expenses.get(i);
 
-			threeYears.add(Detail.builder()
-				.period(String.valueOf(asset.getBaseYearMonth() / 100))
-				.asset(asset.getTotalSum())
-				.debt(asset.getTotalDebt())
-				.bizProfit(profit.getPublicBusinessSum())
-				.donation(profit.getPublicBusinessDonation())
-				.bizCost(expense.getPublicTotalSum())
-				.distributionCost(expense.getPublicBusinessDistributionSum())
-				.build());
+			tableHead.add(String.valueOf(asset.getBaseYearMonth() / 100));
+
+			data.add(asset.getTotalSum());
+			data.add(asset.getTotalDebt());
+			data.add(profit.getPublicBusinessSum());
+			data.add(profit.getPublicBusinessDonation());
+			data.add(expense.getPublicTotalSum());
+			data.add(expense.getPublicBusinessDistributionSum());
+
+			tableData.add(data);
 		}
 
 		return CharityFinanceInfo.builder()
 			.totalAsset(assets.get(0).getTotalSum())
 			.debt(assets.get(0).getTotalDebt())
 			.netAsset(assets.get(0).getTotalNetSum())
-			.threeYears(threeYears)
+			.tableHead(tableHead)
+			.tableData(tableData)
 			.build();
-	}
-
-
-	@Builder
-	private static record Detail(Long asset,
-								 String period,
-								 Long debt,
-								 Long bizProfit,
-								 Long donation,
-								 Long bizCost,
-								 Long distributionCost) {
 	}
 }
