@@ -12,8 +12,6 @@ import giveangel.back.domain.charity.service.dto.CharityFinanceInfo;
 import giveangel.back.domain.charity.service.dto.CharityInfo;
 import giveangel.back.domain.charity.service.dto.CharityNewsInfo;
 import giveangel.back.global.api.news.NaverNewsClient;
-import giveangel.back.global.api.news.News;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

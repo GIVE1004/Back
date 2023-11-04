@@ -20,11 +20,11 @@ import lombok.Setter;
 public class CharityInfo {
 
 	private Long charityId;
-	private String introduce;
 	private String name;
 	private String representative;
 	private LocalDate establishmentDate;
 	private String establishmentDateType;
+	private String location;
 	private String tel;
 	private String homepage;
 	private String email;
@@ -37,11 +37,11 @@ public class CharityInfo {
 	public static CharityInfo of(Charity charity) {
 		return CharityInfo.builder()
 			.charityId(charity.getId())
-			.introduce(" ")
 			.name(charity.getName())
 			.representative(charity.getRepresentative())
 			.establishmentDate(charity.getEstablishmentDate())
 			.establishmentDateType(charity.getEstablishmentType())
+			.location(charity.getLocation())
 			.tel(charity.getTel())
 			.homepage(charity.getHomepage())
 			.email(charity.getEmail())

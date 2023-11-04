@@ -6,18 +6,15 @@ import static giveangel.back.global.jwt.exception.JwtErrorCode.INVALID_TOKEN;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import giveangel.back.domain.member.entity.Member;
 import giveangel.back.domain.member.entity.MemberRole;
-import giveangel.back.domain.member.entity.OAuthId;
 import giveangel.back.global.jwt.exception.JwtException;
-import giveangel.back.global.oauth.vendor.enums.OAuthServerType;
+import giveangel.back.global.jwt.security.LoginMember;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
-import io.netty.handler.codec.base64.Base64Decoder;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
@@ -69,10 +66,10 @@ public class JwtTokenProvider {
 	}
 
 	// 토큰을 회원 정보로 파싱
-	public Member parseAccessToken(String accessToken) {
+	public LoginMember parseAccessToken(String accessToken) {
 		Claims payload = parseToken(accessToken, props.accessKey());
 
-		return Member.builder()
+		return LoginMember.builder()
 			.id(Long.valueOf(payload.getId()))
 			.nickname(payload.get(CLAIM_NICKNAME, String.class))
 			.email(payload.get(CLAIM_EMAIL, String.class))

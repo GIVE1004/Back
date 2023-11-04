@@ -1,8 +1,6 @@
 package giveangel.back.global.api.news;
 
 import java.io.IOException;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -25,7 +23,7 @@ public class NewsCrawler {
 
 			thumnail = thumbEle.attr(ATTRIBUTE);
 			siteName = siteNameEle.attr(ATTRIBUTE);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

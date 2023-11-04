@@ -1,17 +1,16 @@
 package giveangel.back.global.jwt.security;
 
-import giveangel.back.domain.member.entity.Member;
 import java.util.Collection;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 
-	private Member principal;
+	private LoginMember principal;
 	private Object credentials;
 
 
-	public JwtAuthenticationToken(Member principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
+	public JwtAuthenticationToken(LoginMember principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
 		super(authorities);
 		this.principal = principal;
 		this.credentials = credentials;

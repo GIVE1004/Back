@@ -21,7 +21,7 @@ public class CharityController {
 	private final CharityService charityService;
 
 	@GetMapping
-	public ResponseEntity<Message<CharityInfo>> publicCurrent(@PathVariable Long charityId) {
+	public ResponseEntity<Message<CharityInfo>> charityInfo(@PathVariable Long charityId) {
 		return ResponseEntity.ok()
 			.body(Message.success(charityService.inquiryCharity(charityId)));
 	}
