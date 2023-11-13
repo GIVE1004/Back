@@ -238,3 +238,31 @@ create table if not exists survey
         foreign key (member_id) references member (id)
 );
 
+create table if not exists tags
+(
+    id        bigint auto_increment
+        primary key,
+    categorie varchar(100) null,
+    tag_name  varchar(100) null
+)
+    charset = utf8mb4;
+
+create table if not exists corporation_tags
+(
+    id     bigint auto_increment
+        primary key,
+    tag_id bigint not null,
+    cop_id int    not null,
+    constraint corporation_tags_ibfk_1
+        foreign key (tag_id) references tags (id),
+    constraint corporation_tags_ibfk_2
+        foreign key (cop_id) references public_interest_corporations (public_interest_corporation_id)
+)
+    charset = utf8mb4;
+
+create index cop_id
+    on corporation_tags (cop_id);
+
+create index tag_id
+    on corporation_tags (tag_id);
+
