@@ -7,11 +7,9 @@ import giveangel.back.domain.charity.entity.Charity;
 import giveangel.back.global.common.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,5 +44,8 @@ public class Analysis extends BaseEntity {
 	private String finance;
 	@Column(columnDefinition = "TEXT")
 	private String profile;
+
+	@Column
+	private Integer trustScore;
 
 }

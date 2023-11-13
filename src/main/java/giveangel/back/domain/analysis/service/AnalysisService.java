@@ -54,4 +54,11 @@ public class AnalysisService {
 		return analysis.getReview();
 	}
 
+	public Integer getTrustScore(Long charityId){
+		Analysis analysis = analysisRepository.findByCharityId(charityId)
+			.orElseThrow(() -> new AnalysisException(NOT_EXISTS_CHARITY));
+
+		return analysis.getTrustScore();
+	}
+
 }

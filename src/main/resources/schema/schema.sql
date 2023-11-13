@@ -10,6 +10,7 @@ create table if not exists analysis
     overall                        text        null,
     profile                        text        null,
     review                         text        null,
+    trust_score                    int         null,
     public_interest_corporation_id bigint      not null
 );
 

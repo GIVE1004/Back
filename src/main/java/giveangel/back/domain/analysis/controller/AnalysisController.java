@@ -46,4 +46,8 @@ public class AnalysisController {
 		return ResponseEntity.ok(Message.success(analysisService.getReviewAnalysis(charityId)));
 	}
 
+	@GetMapping("/trust-score")
+	public ResponseEntity<Message<Integer>> getTrustScore(@PathVariable Long charityId) {
+		return ResponseEntity.ok(Message.success(analysisService.getTrustScore(charityId)));
+	}
 }
