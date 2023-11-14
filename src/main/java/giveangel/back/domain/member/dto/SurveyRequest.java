@@ -18,6 +18,7 @@ public class SurveyRequest {
 	private Integer second;
 	private Integer third;
 	private Integer fourth;
+	private Integer five;
 
 	public Survey toEntity() {
 		return Survey.builder()
@@ -26,6 +27,7 @@ public class SurveyRequest {
 			.second(second)
 			.third(third)
 			.fourth(fourth)
+			.five(five)
 			.build();
 	}
 }

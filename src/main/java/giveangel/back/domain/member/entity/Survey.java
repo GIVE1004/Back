@@ -43,4 +43,8 @@ public class Survey extends BaseEntity {
 	@Column
 	private Integer fourth;
 
+	@Column
+	private Integer five;
+
+
 }
